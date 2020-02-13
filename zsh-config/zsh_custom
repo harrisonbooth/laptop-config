@@ -24,27 +24,6 @@ alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resourc
 alias android="open -a 'Android Studio'"
 alias xopen="open -a 'XCode'"
 
-
-# 2 FUNCTIONS
-
-# 2.1 Opening VS Code from Terminal
-# Opens a VS Code workspace with the current directory as the project.
-#
-# Example
-# `code ~/projects/coding_thing`
-# Will open a VS Code workspace with the `~/projects/coding_thing` directory open as the current project.
-#
-# function code {
-#   if [[ $1 = 0 ]]
-#   then
-#     open -a "Visual Studio Code"
-#   else
-#     local argPath="$1"
-#     [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
-#     open -a "Visual Studio Code" "$argPath"
-#   fi
-# }
-
 # 2.2 Navigating to cohort folders
 # Navigates to the directery of a cohort in a specific location.
 #
@@ -125,21 +104,6 @@ function mkcohort {
       mkweek $i
     fi
   done
-}
-
-# 2.6 Running a process in the background
-# Runs a process in the background, putting it in the jobs list for the current terminal instance.
-#
-# $1 - command/process to be run the background
-#
-# Example
-# 'runbg ionic serve'
-# Will run `ionic serve` in the background of the terminal window as a job.
-#
-function runbg {
-  mkdir -p logs
-  param_str=$*
-  $@ &> logs/${param_str// /_}.log &
 }
 
 # 3 PROMPT
