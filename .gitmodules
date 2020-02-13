@@ -1,9 +1,0 @@
-[submodule "vscode-config"]
-	path = vscode-config
-	url = https://github.com/harrisonbooth/vscode-config
-[submodule "custom-zsh"]
-	path = custom-zsh
-	url = git@github.com:harrisonbooth/custom-zsh.git
-[submodule "laptop"]
-	path = laptop
-	url = https://github.com/codeclan/laptop

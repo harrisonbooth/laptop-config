@@ -1,13 +1,5 @@
 # Laptop Config Scripts and Files
 
-## Installation:
-Post cloning, move into each submodule folder and run:
-```bash
-git submodule init
-
-git submodule update
-```
-
 ## Usage
 
 ### ZSH Config
