@@ -158,6 +158,11 @@ brew "postgres", restart_service: true
 brew "mongodb"
 cask "mongodb-compass-community"
 
+# Docker
+brew "docker"
+brew "docker-compose"
+brew "docker-machine"
+
 # Fonts
 cask "font-opendyslexic"
 EOF
@@ -180,6 +185,27 @@ install_gui_app "slack" "slack"
 
 # Insomnia
 install_gui_app "insomnia" "insomnia"
+
+# Visual Studio Code
+install_gui_app "visual studio code" "visual-studio-code"
+
+# Spectacle
+install_gui_app "spectacle" "spectacle"
+
+# Sequel Pro
+install_gui_app "sequel pro" "sequel-pro"
+
+# Alfred
+install_gui_app "alfred" "alfred"
+
+# Spotify
+install_gui_app "spotify" "spotify"
+
+# Notion
+install_gui_app "notion" "notion"
+
+# IntelliJ
+install_gui_app "intellij idea ce" "intellij-idea-ce"
 
 fancy_echo "Configuring Ruby ..."
 find_latest_ruby() {
@@ -237,13 +263,5 @@ if ! psql -lqt | cut -d \| -f 1 | grep -qw "$(whoami)" >/dev/null; then
 fi
 createuser "postgres"
 
-# IntelliJ
-fancy_echo "Installing IntelliJ"
-install_gui_app "intellij idea ce" "intellij-idea-ce"
-
 fancy_echo "Checking for unsuccessful installs"
-
-curl --remote-name "https://raw.githubusercontent.com/codeclan/laptop/master/laptop_install_test"
 sh laptop_install_test
-
-fancy_echo "⚠️ Script has finished - please scroll the lines above and bring any errors to an instructor's attention during Meet Your Cohort ⚠️"

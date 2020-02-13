@@ -6,7 +6,6 @@
 Add a `source` to your `.zshrc` file with the path to the `zsh_custom` file.
 Optionally add an alias which sources the `zsh_teaching` file.
 
-
 ### Laptop Script
 Run `sh ./laptop/mac 2>&1 | tee ~/laptop.log`.
 
