@@ -1,0 +1,204 @@
+#! /bin/sh
+
+# 0 MISC
+# 0.1 Set ZSH theme to fishy
+ZSH_THEME="fishy"
+# 0.2 Set default text editor to vi
+export EDITOR='vi'
+
+# 1 ALIASES
+
+# 1.1 Typo Aversion
+alias nom="npm"
+alias nmp="npm"
+alias got="git"
+
+# 1.2 Shortening
+alias gaa="git add --all"
+alias gst="git status"
+alias l='ls'
+alias glg='git log --oneline --decorate --color'
+
+# 1.3 System Convenience
+alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+alias android="open -a 'Android Studio'"
+alias xopen="open -a 'XCode'"
+
+
+# 2 FUNCTIONS
+
+# 2.1 Opening VS Code from Terminal
+# Opens a VS Code workspace with the current directory as the project.
+#
+# Example
+# `code ~/projects/coding_thing`
+# Will open a VS Code workspace with the `~/projects/coding_thing` directory open as the current project.
+#
+# function code {
+#   if [[ $1 = 0 ]]
+#   then
+#     open -a "Visual Studio Code"
+#   else
+#     local argPath="$1"
+#     [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
+#     open -a "Visual Studio Code" "$argPath"
+#   fi
+# }
+
+# 2.2 Navigating to cohort folders
+# Navigates to the directery of a cohort in a specific location.
+#
+# $1 - Cohort code to navigate to
+#
+# Example
+# `cohort e31`
+# Will navigate to `/Users/user/codeclan/cohorts/e31`
+#
+function cohort {
+  if [ "$1" != "" ]
+  then
+    cd "/Users/user/codeclan/cohorts/$1"
+  else
+    cd "/Users/user/codeclan/cohorts"
+  fi
+}
+
+# 2.3 Creating a Git repository
+# Creates a local git repository in the current directory, then creates a .gitignore if there is none, and commits it.
+# Then creates a remote repository on Github, adds it as an origin, then pushes to `origin/master`, setting that as the
+# default upstream branch.
+#
+# $1 - Name for remote repository
+#
+# Example
+# `gcreate my-git-repo`
+# Will create a local repo, create a gitignore file, add all changes, commit, then it will create a remote repo on GitHub
+# called `my-git-repo`, add it as an origin, then push to `origin/master` and set that as the default upstream.
+#
+function gcreate {
+    if [[ $1 != "" ]]
+    then
+        git init
+        touch .gitignore
+        git add .
+        git commit -m "Initial commit"
+        curl -u 'HarrisonBooth' https://api.github.com/user/repos -d '{"name":"'$1'"}'
+        git remote add origin git@github.com:HarrisonBooth/$1.git
+        git push origin master
+    else
+        echo "Please provide a name for your new git repo"
+        echo "e.g. gcreate MyNewRepo"
+    fi
+}
+
+# 2.4 Creating a 5 day week
+# Create a folder with the prefix `w` then a suffix decided by a parameter, then within that creates `d1` through `d5`
+# folders within it.
+#
+# $1 - suffix for parent (`w`) folder
+#
+# Example
+# `mkweek 4`
+# Will create a `w4` folder, and within that will create `d1`, `d2`, `d3`, `d4`, `d5` folders.
+#
+function mkweek {
+  mkdir -p w$1/d1/../d2/../d3/../d4/../d5
+}
+
+# 2.5 Creating a cohort week folder structure
+# Creates a set of folders to reflect the weeks in the Codeclan course - folders named `w${number}` with number going
+# from 01 to 16 - with `d1`, `d2`, `d3`, `d4`, and `d5` folders in each.
+#
+# Example
+# `mkcohort`
+# Will create 16 folders, `w01` to `w16`, and within each `d1`, `d2`, `d3`, `d4`, and `d5` folders.
+#
+function mkcohort {
+  for i in {1..16..1}
+  do
+    if [ $i -lt 10 ]
+      then
+      mkweek 0$i
+    fi
+    if [ $i -ge 10 ]
+      then
+      mkweek $i
+    fi
+  done
+}
+
+# 2.6 Running a process in the background
+# Runs a process in the background, putting it in the jobs list for the current terminal instance.
+#
+# $1 - command/process to be run the background
+#
+# Example
+# 'runbg ionic serve'
+# Will run `ionic serve` in the background of the terminal window as a job.
+#
+function runbg {
+  mkdir -p logs
+  param_str=$*
+  $@ &> logs/${param_str// /_}.log &
+}
+
+# 3 PROMPT
+
+# 3.1 Left Prompt
+local prompt_inner="%(?:%{$fg_bold[blue]%}%(3~|%-1~/.../%1~|%4~):%{$fg_bold[red]%}%(3~|%-1~/.../%1~|%4~))"
+PROMPT='%{$reset_color%}< ${prompt_inner}%b%{$reset_color%} /> ' # `< ~/.../current_folder />`
+# NOTE: If preceeding command was successful path appears blue, if not - red.
+
+# 3.2 Right Prompt (Git Information)
+# 3.2.1 Set format of right prompt
+RPROMPT='$(git_prompt_info)$(git_prompt_status)%{$reset_color%}' # `branch status_addition`
+
+# 3.2.2 Clear default git status additions
+ZSH_THEME_GIT_PROMPT_PREFIX=" "
+ZSH_THEME_GIT_PROMPT_SUFFIX=""
+ZSH_THEME_GIT_PROMPT_DIRTY=""
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+
+# 3.2.3 Configure custom detailed git status additions
+ZSH_THEME_GIT_PROMPT_ADDED="%{$fg_bold[green]%}+"     # Staged file(s): ----- `+` [green]
+ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg_bold[blue]%}!"   # Modified file(s): --- `!` [blue]
+ZSH_THEME_GIT_PROMPT_DELETED="%{$fg_bold[red]%}-"     # Deleted file(s): ---- `-` [red]
+ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg_bold[magenta]%}>" # Renamed File(s): ---- `>` [magenta]
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg_bold[yellow]%}#" # Unmerged File(s): --- `#` [yellow]
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg_bold[cyan]%}?"  # Untracked Files(s): - `?` [cyan]
+
+
+# 4 LS COLORS
+# directory: ------------------------------------- Fx [bold magenta]
+# symbolic link: --------------------------------- fx [light grey with magenta bg]
+# socket: ---------------------------------------- cx [green]
+# pipe: ------------------------------------------ dx [brown]
+# executable: ------------------------------------ bx [red]
+# block special: --------------------------------- eg [blue with cyan bg]
+# character special: ----------------------------- ed [blue with brown bg]
+# executable with setuid bit set: ---------------- ab [black with red bg]
+# executable with setgid bit set: ---------------- ag [black with cyan bg]
+# directory writable to others, with sticky bit: - ac [black with green bg]
+# directory writable to others, without sticky: -- ad [black with brown bg]
+
+export LSCOLORS=Fxhfcxdxbxegedabagacad
+
+# NOTE: below are the colour values and rules
+# Colour values
+#   - a black
+#   - b red
+#   - c green
+#   - d brown
+#   - e blue
+#   - f magenta
+#   - g cyan
+#   - h light grey
+#   - A bold black, usually shows up as dark grey
+#   - B bold red
+#   - C bold green
+#   - D bold brown, usually shows up as yellow
+#   - E bold blue
+#   - F bold magenta
+#   - G bold cyan
+#   - H bold light grey; looks like bright white
+#   - x default foreground or background

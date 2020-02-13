@@ -1,0 +1,70 @@
+{
+    "editor.fontSize": 14,
+    "editor.fontWeight": "500",
+    "editor.insertSpaces": true,
+    "editor.quickSuggestionsDelay": 10,
+    "workbench.fontAliasing": "antialiased",
+    "files.trimTrailingWhitespace": true,
+    "files.eol": "\n",
+    "editor.detectIndentation": false,
+    "workbench.colorTheme": "Dracula Soft",
+    "window.zoomLevel": 0,
+    "files.autoSave": "onFocusChange",
+    "editor.minimap.enabled": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "files.insertFinalNewline": true,
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.selectionHighlight": false,
+    "editor.occurrencesHighlight": false,
+    "javascript.validate.enable": false,
+    "editor.multiCursorModifier": "alt",
+    "editor.snippetSuggestions": "top",
+    "prettier.semi": false,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.disableLanguages": [
+      "vue",
+      "markdown"
+    ],
+    "gitlens.keymap": "none",
+    "gitlens.advanced.messages": {
+      "suppressCommitHasNoPreviousCommitWarning": false,
+      "suppressCommitNotFoundWarning": false,
+      "suppressFileNotUnderSourceControlWarning": false,
+      "suppressGitVersionWarning": false,
+      "suppressLineUncommittedWarning": false,
+      "suppressNoRepositoryWarning": false,
+      "suppressResultsExplorerNotice": false,
+      "suppressShowKeyBindingsNotice": true
+    },
+    "editor.scrollBeyondLastLine": true,
+    "window.title": "${activeEditorFull}${separator}${rootName}",
+    "elixirLS.suggestSpecs": false,
+    "editor.fontFamily": "Fira Code, monospace",
+    "editor.fontLigatures": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.sideBar.location": "right",
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.tree.indent": 6,
+    "breadcrumbs.enabled": true,
+    "workbench.settings.useSplitJSON": true,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.gotoLocation.multiple": "goto",
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "editor.formatOnSave": true,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.fontSize": 15,
+    "editor.tabSize": 2,
+    "editor.rulers": [
+      80
+    ],
+    "workbench.iconTheme": "material-icon-theme"
+  }
+  
