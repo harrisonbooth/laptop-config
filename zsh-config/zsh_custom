@@ -24,6 +24,8 @@ alias lock="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resourc
 alias android="open -a 'Android Studio'"
 alias xopen="open -a 'XCode'"
 
+alias tablet="xsetwacom --set 21 MapToOutput 2560x1440+0+0"
+
 # 2.2 Navigating to cohort folders
 # Navigates to the directery of a cohort in a specific location.
 #
